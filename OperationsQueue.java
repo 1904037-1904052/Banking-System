@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class OperationsQueue {
     private final List<Integer> operations = new ArrayList<>();
-    private final Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock(true);
 
     public void addSimulation(int totalSimulation) {
 

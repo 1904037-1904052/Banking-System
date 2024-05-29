@@ -1,3 +1,8 @@
 Problem :
+Resource access
 Starvation - one thread is added back and then again pop back same operation
--9999 used as termination of operation queue, not a good practice
+-9999 used as termination of operation queue, not works perfectly
+
+Starvation and resource access problem solved
+// termination : If a thread get a value from queue it can again add that value
+to the queue, how to handle that both thread dont contain any value
