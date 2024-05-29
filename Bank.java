@@ -42,7 +42,7 @@ public class Bank {
 
             if(balance+amount<0){
 
-                System.out.println("Not enough balance to deposite "+amount);
+                System.out.println("Not enough balance to Withdrawn "+amount);
                 continue;
             }
 

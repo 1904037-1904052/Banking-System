@@ -1,7 +1,11 @@
 import java.util.List;
-import java.util.ArrayList;;
+import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class OperationsQueue {
     private final List<Integer> operations = new ArrayList<>();
+    private final Lock lock = new ReentrantLock();
 
     public void addSimulation(int totalSimulation) {
 
@@ -22,18 +26,29 @@ public class OperationsQueue {
         operations.add(-9999);
     }
     public void add(int amount) {
-        operations.add(amount);
+        lock.lock();
+        try {
+            operations.add(amount);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public synchronized int getNextItem() {
         // add a small delay to simulate the time taken to get the next operation.
-        while(operations.isEmpty()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        lock.lock();
+        try {
+            System.out.println(Thread.currentThread().getName() + operations.isEmpty());
+            while (operations.isEmpty()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            return operations.remove(0);
+        } finally {
+            lock.unlock();
         }
-        return operations.remove(0);
     }
 }
