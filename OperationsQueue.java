@@ -14,8 +14,8 @@ public class OperationsQueue {
             int random = (int) (Math.random() * 200) - 100;
             if (random != 0) {
                 operations.add(random);
+                System.out.println(i + ". New operation added: " + random);
             }
-            System.out.println(i + ". New operation added: " + random);
             // add small delay to simulate the time taken for a new customer to arrive
             try {
                 Thread.sleep((int) (Math.random() * 80));
@@ -38,7 +38,6 @@ public class OperationsQueue {
         // add a small delay to simulate the time taken to get the next operation.
         lock.lock();
         try {
-            System.out.println(Thread.currentThread().getName() + operations.isEmpty());
             while (operations.isEmpty()) {
                 try {
                     Thread.sleep(100);
@@ -46,6 +45,7 @@ public class OperationsQueue {
                     e.printStackTrace();
                 }
             }
+            System.out.println(Thread.currentThread().getName() + operations);
             return operations.remove(0);
         } finally {
             lock.unlock();
