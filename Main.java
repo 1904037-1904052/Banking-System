@@ -7,7 +7,7 @@ public class Main {
 
         System.out.println("Hello and welcome!");
 
-        System.out.printf("Initializing banking system..");
+        System.out.println("Initializing banking system..");
 
         int totalNumberOfSimulaion = 10;
         OperationsQueue operationsQueue = new OperationsQueue();
@@ -20,7 +20,7 @@ public class Main {
         simulationThread.start();
 
 
-        System.out.printf("Initializing deposit system....");
+        System.out.println("Initializing deposit system....");
         Thread depositThread = new Thread(() -> {
             bank.deposit();
         });

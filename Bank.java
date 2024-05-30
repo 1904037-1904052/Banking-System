@@ -22,6 +22,7 @@ public class Bank {
             }
             if (amount>0) {
                 balance =  balance + amount;
+                operationsQueue.ProcessDone();
                 System.out.println("Deposited: " + amount + " Balance: " + balance);
             }
             else{
@@ -41,13 +42,14 @@ public class Bank {
             }
 
             if(balance+amount<0){
-
+                operationsQueue.ProcessDone();
                 System.out.println("Not enough balance to Withdrawn "+amount);
                 continue;
             }
 
             if (amount<0) {
                 balance =  balance + amount;
+                operationsQueue.ProcessDone();
                 System.out.println("Withdrawn: " + amount + " Balance: " + balance);
             }
             else{

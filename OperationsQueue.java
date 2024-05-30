@@ -6,6 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class OperationsQueue {
     private final List<Integer> operations = new ArrayList<>();
     private final Lock lock = new ReentrantLock(true);
+    private boolean endofoperation = false, OnProcess1 = false, OnProcess2 = false;
 
     public void addSimulation(int totalSimulation) {
 
@@ -23,28 +24,34 @@ public class OperationsQueue {
                 e.printStackTrace();
             }
         }
-        operations.add(-9999);
+        endofoperation = true;
     }
     public void add(int amount) {
         lock.lock();
         try {
             operations.add(amount);
+            ProcessDone();
         } finally {
             lock.unlock();
         }
     }
-
+    public synchronized void ProcessDone() {
+        if(OnProcess1 == true) OnProcess1 = false;
+        else OnProcess2 = false;
+    }
     public synchronized int getNextItem() {
         // add a small delay to simulate the time taken to get the next operation.
         lock.lock();
         try {
-            while (operations.isEmpty()) {
+            while (operations.isEmpty() && (endofoperation == false || OnProcess1 == true || OnProcess2 == true)) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                System.out.println("OnCircle    --- --- --- --- --- --- ---");
             }
+            if(operations.isEmpty()) return -9999;
             System.out.println(Thread.currentThread().getName() + operations);
             return operations.remove(0);
         } finally {
