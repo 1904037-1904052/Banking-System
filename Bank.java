@@ -3,7 +3,7 @@ public class Bank {
     String accountNumber;
 
     OperationsQueue operationsQueue;
-
+    private final Object lock = new Object();
     int balance = 0;
 
     public Bank(String accountNumber, OperationsQueue operationsQueue) {
@@ -21,8 +21,10 @@ public class Bank {
                 break;
             }
             if (amount>0) {
-                balance =  balance + amount;
-                operationsQueue.ProcessDone();
+                synchronized(lock) {
+                    balance =  balance + amount;
+                    operationsQueue.ProcessDone();
+                }
                 System.out.println("Deposited: " + amount + " Balance: " + balance);
             }
             else{
@@ -48,8 +50,10 @@ public class Bank {
             }
 
             if (amount<0) {
-                balance =  balance + amount;
-                operationsQueue.ProcessDone();
+                synchronized(lock) {
+                    balance =  balance + amount;
+                    operationsQueue.ProcessDone();
+                }
                 System.out.println("Withdrawn: " + amount + " Balance: " + balance);
             }
             else{

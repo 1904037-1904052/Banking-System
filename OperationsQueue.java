@@ -49,10 +49,16 @@ public class OperationsQueue {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println("OnCircle    --- --- --- --- --- --- ---");
+                // System.out.println("OnCircle    --- --- --- --- --- --- ---");
+                // System.out.println(OnProcess1);
+                // System.out.println(OnProcess2);
             }
             if(operations.isEmpty()) return -9999;
-            System.out.println(Thread.currentThread().getName() + operations);
+            // System.out.println(Thread.currentThread().getName() + operations);
+            if(OnProcess1 == true) OnProcess2 = true;
+            else OnProcess1 = true;
+            // System.out.println(OnProcess1);
+            // System.out.println(OnProcess2);
             return operations.remove(0);
         } finally {
             lock.unlock();
