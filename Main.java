@@ -33,6 +33,7 @@ public class Main {
         });
         withdrawThread.start();
         
+        simulationThread.join();
         depositThread.join();
         withdrawThread.join();
         System.out.println("completed");
